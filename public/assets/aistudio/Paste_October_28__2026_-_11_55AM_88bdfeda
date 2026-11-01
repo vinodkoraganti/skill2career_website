@@ -1,0 +1,1158 @@
+# PROJECT: SKILL2CAREER — COMPLETE FULL-STACK AI CAREER GUIDANCE PLATFORM
+
+Act as a senior full-stack software architect, React developer, Firebase engineer, backend developer, AI engineer, UI/UX designer, security engineer, and QA engineer.
+
+Your responsibility is to BUILD a complete, functional, secure, responsive, and deployable application called **Skill2Career**.
+
+Do not create only a UI prototype, static website, landing page, or collection of disconnected pages. Implement the frontend, backend, Firebase authentication, Firestore database connection, private file storage, AI integration, admin dashboard, user dashboard, testing, and deployment documentation.
+
+Work systematically. Inspect the current project first if an existing project is available. Preserve useful existing code and improve it instead of unnecessarily rebuilding everything.
+
+## 1. PROJECT IDENTITY
+
+Application name: Skill2Career
+
+Tagline: Your Career Starts with the Right Skills.
+
+Purpose:
+Help students, recent graduates, and working professionals identify suitable career paths, understand their current skills, discover missing skills, follow personalized learning roadmaps, find relevant courses and certifications, and discover jobs and internships.
+
+Primary users:
+1. Students.
+2. Working professionals.
+3. Administrators.
+
+Design direction:
+- Professional, modern, trustworthy educational technology platform.
+- Primary colors: sky blue, white, and complementary light-blue shades.
+- Dark navy text for readability.
+- Consistent spacing, typography, cards, buttons, forms, and navigation.
+- Clean dashboards, subtle animations, useful icons, and attractive data visualizations.
+- Fully responsive on desktop, laptop, tablet, and mobile.
+- Accessible labels, keyboard navigation, validation messages, and readable contrast.
+- Avoid excessive gradients, unnecessary animations, cluttered layouts, and fake statistics.
+- Use reusable components and a consistent design system.
+
+Create a professional logo or text-based brand treatment for Skill2Career if no logo asset exists.
+
+## 2. REQUIRED TECHNOLOGY ARCHITECTURE
+
+Use this architecture consistently:
+
+Frontend:
+- React.
+- TypeScript.
+- Vite, if compatible with the existing project.
+- Tailwind CSS.
+- React Router.
+- Reusable components and typed API/data models.
+- A suitable form validation library where beneficial.
+
+Backend:
+- Firebase Cloud Functions using TypeScript.
+- Server-side validation and business logic.
+- Secure endpoints for operations requiring privileged access.
+- Use Firebase Admin SDK only inside trusted server-side code.
+
+Authentication:
+- Firebase Authentication.
+- Email/password registration and login.
+- Password reset.
+- Email verification support.
+- Persistent login sessions.
+- Logout.
+- Authenticated route protection.
+
+Database:
+- Cloud Firestore as the primary database.
+- Use documented collection structures and appropriate indexes.
+- Store timestamps consistently.
+- Support loading, empty, success, and error states.
+
+File storage:
+- Firebase Storage for private resume uploads, if enabled.
+- Validate file types and size.
+- Restrict access to the authenticated owner and authorized administrators where appropriate.
+- Never make resumes publicly accessible by default.
+
+AI:
+- Gemini API called from the trusted backend.
+- Never expose Gemini API keys in browser code.
+- Validate user input before processing it.
+- Validate and normalize AI-generated results before saving or displaying them.
+- Provide a useful fallback if the AI service is unavailable.
+
+Hosting:
+- Configure the frontend for Firebase Hosting or another appropriate frontend host.
+- Configure Firebase Cloud Functions and required environment variables.
+- Document the deployment process.
+- Do not claim that deployment has succeeded unless it has actually been completed and verified.
+
+Do not introduce a second database or a separate FastAPI server unless there is a demonstrated requirement. Prefer the Firebase-native architecture above for the first working release.
+
+## 3. INSPECT THE EXISTING PROJECT
+
+Before writing code:
+
+1. Inspect all existing files and folders.
+2. Identify the framework and dependencies.
+3. Identify existing pages, styles, authentication code, database integrations, and environment variables.
+4. Identify missing and incomplete functionality.
+5. Preserve useful components and project assets.
+6. Produce a short implementation plan.
+7. Then implement the application in phases.
+
+Do not stop after producing the plan.
+
+If Firebase project credentials are not available, implement the integration using environment variables and clearly document the exact setup required. Never fabricate valid Firebase credentials.
+
+## 4. WEBSITE ROUTES AND PAGES
+
+Implement the following routes.
+
+PUBLIC PAGES:
+- /
+- /careers
+- /careers/:careerId
+- /courses
+- /courses/:courseId
+- /jobs
+- /jobs/:jobId
+- /about
+- /contact
+- /privacy
+- /terms
+- /login
+- /register
+- /forgot-password
+
+AUTHENTICATED USER PAGES:
+- /dashboard
+- /profile
+- /resume-analysis
+- /career-recommendations
+- /skill-gap
+- /roadmap
+- /my-courses
+- /jobs-and-internships
+- /saved-jobs
+- /saved-courses
+- /assessments
+- /progress
+- /settings
+
+ADMIN PAGES:
+- /admin
+- /admin/courses
+- /admin/careers
+- /admin/jobs
+- /admin/quizzes
+- /admin/users
+- /admin/settings
+
+Protect private routes. Redirect unauthenticated visitors to the login page when necessary.
+
+Protect admin routes using verified server-side administrator authorization, not merely a hidden button or frontend role check.
+
+Use a shared application layout, navigation, footer, loading indicators, error boundaries, and consistent page components.
+
+## 5. HOME PAGE
+
+Build an attractive public homepage containing:
+
+1. Navigation bar with Skill2Career branding.
+2. Hero section with the heading:
+   "Your Career Starts with the Right Skills."
+3. Supporting text explaining the career guidance platform.
+4. Primary button: "Get Started".
+5. Secondary button: "Explore Careers".
+6. Career category cards.
+7. Trending career paths.
+8. Featured courses retrieved from Firestore.
+9. Recently published jobs and internships retrieved from Firestore.
+10. A section explaining how Skill2Career works.
+11. Four roadmap stages:
+    - Foundations.
+    - Core Skills.
+    - Advanced Topics.
+    - Career Ready.
+12. Benefits and features.
+13. Footer containing appropriate navigation and legal links.
+
+Public homepage content must be generated from real catalog data whenever appropriate.
+
+If no courses or jobs exist yet, show a helpful empty state instead of fabricated records or broken cards.
+
+## 6. REGISTRATION AND AUTHENTICATION
+
+Implement working Firebase Authentication.
+
+Registration fields:
+- Full name.
+- Email.
+- Password.
+- Confirm password.
+- Account type: Student or Working Professional.
+- Consent to the privacy policy and terms.
+
+For students, optionally collect:
+- College or university.
+- Degree or qualification.
+- Branch or specialization.
+- Current academic year or semester.
+- Graduation year.
+- Skills.
+- Career interests.
+
+For professionals, optionally collect:
+- Current job title.
+- Industry.
+- Years of experience.
+- Current skills.
+- Desired career direction.
+- Learning goals.
+
+Do not force every optional field during registration. Let users complete their profiles later.
+
+Requirements:
+- Create the Firebase Authentication account.
+- Create the corresponding Firestore user profile using a trusted, validated process.
+- Assign a normal user role by default.
+- Never allow users to select or assign themselves the administrator role.
+- Validate all inputs.
+- Handle duplicate email addresses and weak passwords.
+- Implement login, logout, password reset, and session restoration.
+- Provide useful error messages.
+- Do not store plaintext passwords in Firestore or application logs.
+- Do not expose authentication tokens or secrets in error messages.
+
+## 7. FIRESTORE DATABASE DESIGN
+
+Create and document the following collections.
+
+### A. users/{uid}
+
+Fields:
+- uid
+- displayName
+- email
+- accountType: student or professional
+- role: user or admin
+- photoURL, when applicable
+- createdAt
+- updatedAt
+- profileCompleted
+- accountStatus
+
+The email and other private information must not be exposed through unrestricted public database reads.
+
+### B. users/{uid}/profile/details
+
+Fields:
+- education
+- college
+- degree
+- branch
+- graduationYear
+- currentRole
+- industry
+- experienceYears
+- skills
+- interests
+- preferredCareerPaths
+- learningGoals
+- updatedAt
+
+Only the owner and appropriately authorized backend processes may access private profile data.
+
+### C. careers/{careerId}
+
+Fields:
+- title
+- slug
+- description
+- category
+- requiredSkills
+- recommendedSkills
+- beginnerSkills
+- advancedSkills
+- responsibilities
+- learningPath
+- prerequisites
+- featured
+- published
+- createdAt
+- updatedAt
+
+### D. courses/{courseId}
+
+Fields:
+- title
+- description
+- provider
+- courseUrl
+- thumbnailUrl
+- category
+- skills
+- level
+- duration
+- language
+- priceType
+- priceDescription
+- certificateAvailable
+- featured
+- published
+- createdAt
+- updatedAt
+- createdBy
+
+Store course URLs as validated external links. Never invent certificate claims or guarantee that a course is free.
+
+### E. jobs/{jobId}
+
+Fields:
+- title
+- company
+- description
+- location
+- workMode
+- employmentType
+- requiredSkills
+- experienceLevel
+- applicationUrl
+- source
+- applicationDeadline
+- featured
+- published
+- createdAt
+- updatedAt
+
+Only display verified or appropriately sourced job information. Include the source and last-updated date where possible. Do not present sample records as verified live vacancies.
+
+### F. quizzes/{quizId}
+
+Fields:
+- title
+- description
+- category
+- questions
+- difficulty
+- published
+- createdAt
+- updatedAt
+
+Do not expose correct answers in public quiz responses before submission.
+
+### G. users/{uid}/roadmaps/{roadmapId}
+
+Fields:
+- targetCareer
+- currentSkills
+- missingSkills
+- stages
+- tasks
+- completionPercentage
+- status
+- createdAt
+- updatedAt
+
+### H. users/{uid}/resumeAnalyses/{analysisId}
+
+Fields:
+- fileName
+- extractedText, if retention is necessary and consented to
+- skills
+- experienceSummary
+- educationSummary
+- recommendedCareers
+- skillGaps
+- improvementSuggestions
+- createdAt
+
+Avoid retaining unnecessary resume text. Let users delete their analyses and associated files where supported.
+
+### I. users/{uid}/quizAttempts/{attemptId}
+
+Fields:
+- quizId
+- answers
+- score
+- totalQuestions
+- submittedAt
+
+### J. users/{uid}/savedCourses/{courseId}
+
+Fields:
+- courseId
+- savedAt
+
+### K. users/{uid}/savedJobs/{jobId}
+
+Fields:
+- jobId
+- savedAt
+
+### L. users/{uid}/progress/{progressId}
+
+Fields:
+- activityType
+- relatedItemId
+- status
+- completionPercentage
+- updatedAt
+
+Use subcollections or another documented structure when needed for scalability.
+
+Use Firestore document IDs consistently. Add indexes where required and document them.
+
+## 8. SECURITY RULES AND ACCESS CONTROL
+
+Implement restrictive Firestore and Storage rules.
+
+Required principles:
+- Deny access by default where appropriate.
+- Public visitors can read only explicitly published public catalog records.
+- Authenticated users can access their own private profile, resume analysis, roadmaps, quiz attempts, saved items, and progress.
+- One user must not be able to read or edit another user's private data.
+- Users must not be able to change their own role to admin.
+- Only authorized administrators may create, edit, publish, unpublish, feature, or delete public catalog records.
+- Validate permitted fields and data types where practical.
+- Restrict resume uploads to the authenticated user's authorized storage path.
+- Validate file size and allowed file types.
+- Never use unrestricted public read/write rules in production.
+- Never deploy rules that permit every user to read or write all documents.
+
+The Firebase Admin SDK bypasses Firestore Security Rules. Therefore, every privileged backend function must independently authenticate the caller, authorize the requested action, validate input, and verify document ownership.
+
+Do not trust an admin role submitted by the browser.
+
+Implement a secure administrator bootstrap process. A trusted project owner must assign the first administrator through a protected administrative process, such as a controlled script or secure deployment-time procedure. Document the exact steps.
+
+## 9. USER DASHBOARD
+
+After login, display information for the currently authenticated user only.
+
+Dashboard sections:
+- Welcome message using the user's display name.
+- Profile completion.
+- Recommended careers.
+- Current target career.
+- Skill-gap summary.
+- Current roadmap.
+- Roadmap completion percentage.
+- Recommended courses.
+- Saved courses.
+- Recommended jobs and internships.
+- Recent quiz results.
+- Learning activity.
+- Progress statistics.
+- Continue learning button.
+
+Retrieve user-specific information from Firestore or the authenticated backend.
+
+Do not hardcode a user's name, profile, progress, or recommendations.
+
+The dashboard must refresh after profile updates, course saves, task completion, and quiz submissions.
+
+Provide clear loading, error, empty, and success states.
+
+## 10. STUDENT AND PROFESSIONAL EXPERIENCE
+
+For students, prioritize:
+- Academic profile.
+- Entry-level career options.
+- Internships.
+- Beginner learning roadmaps.
+- Required technical skills.
+- Projects and certifications.
+
+For professionals, prioritize:
+- Existing work experience.
+- Current technical skills.
+- Career transitions.
+- Advanced skills.
+- Upskilling roadmaps.
+- Relevant employment opportunities.
+
+Both account types should use the same secure authentication and database architecture.
+
+Do not assume that a student's qualification or a professional's experience automatically guarantees employment.
+
+## 11. CAREER RECOMMENDATION ENGINE
+
+Implement a practical career matching service.
+
+Inputs:
+- Current skills.
+- Education.
+- Experience.
+- Interests.
+- Learning goals.
+- Desired career direction.
+- Resume-derived information, when provided and consented to.
+
+Evaluate candidates against career catalog requirements.
+
+Produce:
+- Recommended career paths.
+- Matching skills.
+- Missing skills.
+- Reasons for the recommendation.
+- Suggested next steps.
+- Relevant published courses.
+- Relevant jobs or internships, when available.
+
+Start with a transparent rule-based matching algorithm. It must work even when the AI service is unavailable.
+
+Use Gemini to explain and enrich recommendations where appropriate, but validate its output against the available career catalog.
+
+Do not claim that recommendations are scientifically validated employment predictions. Do not fabricate placement percentages, salaries, or job availability.
+
+## 12. SKILL-GAP ANALYSIS
+
+Compare the user's current skills with the skills required by the selected career.
+
+Display:
+- Skills already possessed.
+- Missing skills.
+- Priority level.
+- Suggested learning order.
+- Recommended courses.
+- Suggested practical projects.
+- Progress toward closing each gap.
+
+Let the user mark a skill as started or completed.
+
+Persist changes in Firestore and recalculate progress accurately.
+
+Do not mark a skill complete merely because the user opens a course.
+
+## 13. PERSONALIZED LEARNING ROADMAP
+
+Generate a four-stage roadmap:
+
+Stage 1: Foundations.
+Stage 2: Core Skills.
+Stage 3: Advanced Topics.
+Stage 4: Career Ready.
+
+Each stage should contain:
+- Learning objectives.
+- Required skills.
+- Practical tasks.
+- Project suggestions.
+- Recommended published courses.
+- Assessment or quiz suggestions.
+- Completion status.
+
+Example for a student targeting AI/ML engineering:
+
+Foundations:
+- Python fundamentals.
+- Basic programming logic.
+- Git and GitHub.
+- Mathematics and statistics fundamentals.
+
+Core Skills:
+- NumPy and pandas.
+- SQL.
+- Data cleaning.
+- Data visualization.
+- Basic machine learning.
+
+Advanced Topics:
+- Model evaluation.
+- Feature engineering.
+- Deep learning fundamentals.
+- APIs and model deployment.
+- One or more practical projects.
+
+Career Ready:
+- Portfolio projects.
+- Resume preparation.
+- Technical interview practice.
+- DSA and problem-solving practice.
+- Relevant internships and entry-level applications.
+
+Treat this as an illustrative roadmap, not a guarantee of employment.
+
+Save roadmaps to Firestore. Users must be able to continue their existing roadmap instead of receiving a new one every time they log in.
+
+## 14. RESUME UPLOAD AND ANALYSIS
+
+Implement a complete resume workflow.
+
+1. User selects a PDF or another explicitly supported format.
+2. Validate the file type and size.
+3. Upload the file to a private Firebase Storage path.
+4. Extract text using an appropriate supported backend library or service.
+5. Send the minimum necessary text to the Gemini backend for analysis.
+6. Parse and validate the response.
+7. Display a structured result.
+8. Save the useful analysis to the authenticated user's private records.
+9. Allow the user to remove the analysis and associated file when supported.
+
+Analysis output should include:
+- Extracted skills.
+- Education summary.
+- Experience summary.
+- Relevant project highlights.
+- Potential career paths.
+- Missing skills.
+- Resume improvement suggestions.
+- Suggested courses.
+- Suggested learning roadmap.
+
+Do not invent experience, qualifications, or certifications. Distinguish information explicitly present in the resume from inferred suggestions.
+
+Do not claim that a resume is objectively ATS-approved. Provide practical feedback instead.
+
+Never expose private resumes through public URLs or unrestricted Storage rules.
+
+## 15. COURSE CATALOG AND ADMIN COURSE MANAGEMENT
+
+This is a critical feature.
+
+Create a complete admin course management interface.
+
+The administrator must be able to:
+- Create a course.
+- Edit a course.
+- Save a draft.
+- Publish a course.
+- Unpublish a course.
+- Mark a course as featured.
+- Remove a course after confirmation.
+- Search courses.
+- Filter by category, level, provider, and publication status.
+- View course details.
+- Validate course URLs.
+- View success and failure messages.
+
+The course form should include:
+- Title.
+- Description.
+- Provider.
+- Course URL.
+- Category.
+- Skills taught.
+- Beginner/intermediate/advanced level.
+- Duration.
+- Language.
+- Free or paid classification.
+- Certificate availability.
+- Thumbnail URL or supported image upload.
+- Featured status.
+- Published status.
+
+Connect this interface to authenticated backend operations that read and write Firestore.
+
+Do not implement fake buttons or local-only course records.
+
+After a course is published:
+- It appears in the public course catalog.
+- Featured courses can appear on the homepage.
+- Relevant courses can appear in authenticated dashboards.
+- Users can save courses.
+- Course details are fetched from Firestore.
+- Changes appear on subsequent reads without editing frontend source code.
+
+Only published courses should be visible to public visitors.
+
+Create corresponding management pages for careers and jobs.
+
+## 16. ADDING COURSES TO FIREBASE
+
+Provide two documented methods.
+
+Method A: Admin dashboard.
+- Sign in as an authorized administrator.
+- Open /admin/courses.
+- Select Add Course.
+- Enter validated details.
+- Save as draft or publish.
+- Verify the record in Firestore.
+- Verify its display on the public website.
+
+Method B: Secure seed/import script.
+- Provide a TypeScript script using Firebase Admin SDK.
+- Load course records from a validated local JSON file.
+- Require trusted server-side credentials.
+- Validate required fields and URLs.
+- Use stable document IDs or safe upsert behavior.
+- Avoid accidentally duplicating records.
+- Never include service-account credentials in the frontend or commit them to GitHub.
+
+Document how to import a few clearly identified sample records for development.
+
+Sample data must be labelled as sample data and must not be represented as verified live courses, actual student records, or real job vacancies.
+
+## 17. GEMINI AI BACKEND INTEGRATION
+
+Implement server-side AI functionality for:
+- Resume analysis.
+- Career recommendation explanations.
+- Skill-gap explanations.
+- Personalized learning roadmaps.
+- Resume improvement suggestions.
+
+Use the current supported Gemini SDK and model configuration available to the project.
+
+Store the API key in a server-side secret or environment variable appropriate to the deployment platform.
+
+Never put the Gemini API key in:
+- React source files.
+- Browser environment variables exposed to the client.
+- Public GitHub repositories.
+- Firestore documents.
+- Frontend network requests.
+
+Implement:
+- Input validation.
+- Error handling.
+- Rate limiting or other appropriate abuse controls.
+- Request-size limits.
+- Structured output validation.
+- Sensible timeout handling.
+- A fallback to rule-based recommendations.
+
+Do not send passwords, authentication tokens, or unnecessary private profile fields to the AI service.
+
+Explain what information is sent for AI analysis and avoid retaining more sensitive information than necessary.
+
+## 18. QUIZZES AND ASSESSMENTS
+
+Implement:
+- Published quiz catalog.
+- Quiz details.
+- Question display.
+- Answer selection.
+- Submission.
+- Server-side score calculation.
+- Results page.
+- Review of permitted explanations.
+- Attempt history.
+- Progress tracking.
+
+Never trust a score calculated only by the browser.
+
+Do not send correct answers to the client before submission if they can be used to manipulate scoring.
+
+Save quiz attempts under the authenticated user's records.
+
+## 19. SAVED COURSES, SAVED JOBS, AND PROGRESS
+
+Implement:
+- Save and unsave course.
+- Save and unsave job.
+- View saved items.
+- Mark roadmap tasks started or completed.
+- Update progress.
+- View quiz history.
+- Display recent activity.
+
+Persist changes in Firestore or through authenticated backend operations.
+
+Prevent duplicate saved-item records and validate all referenced catalog IDs.
+
+## 20. BACKEND API AND SERVER FUNCTIONS
+
+Create documented, typed backend operations equivalent to the following:
+
+Authentication and profile:
+- getMyProfile
+- updateMyProfile
+- completeMyProfile
+
+Careers:
+- listPublishedCareers
+- getCareerDetails
+- recommendCareers
+
+Courses:
+- listPublishedCourses
+- getCourseDetails
+- saveCourse
+- unsaveCourse
+
+Jobs:
+- listPublishedJobs
+- getJobDetails
+- saveJob
+- unsaveJob
+
+Learning:
+- analyzeSkillGap
+- createOrUpdateRoadmap
+- updateRoadmapTask
+- getMyProgress
+
+Resume:
+- analyzeResume
+- getMyResumeAnalyses
+- deleteMyResumeAnalysis
+
+Quizzes:
+- listPublishedQuizzes
+- getQuiz
+- submitQuiz
+- getMyQuizAttempts
+
+Administration:
+- createCourse
+- updateCourse
+- publishCourse
+- unpublishCourse
+- deleteCourse
+- createCareer
+- updateCareer
+- publishCareer
+- createJob
+- updateJob
+- publishJob
+- unpublishJob
+
+Use clear naming conventions consistent with Firebase Cloud Functions.
+
+Every operation must validate input and authorization. Private operations must derive the user's UID from a verified identity rather than trusting a UID submitted by the browser.
+
+For admin operations, verify administrator permissions on the server.
+
+Use pagination for growing catalog collections. Implement search and filters in a way supported by Firestore indexes or an explicitly documented search strategy.
+
+## 21. FRONTEND-BACKEND CONNECTION
+
+Create a centralized frontend data-access layer.
+
+Requirements:
+- Use the official Firebase client SDK for authentication.
+- Use authenticated Firebase callable functions or an equivalently secure supported API integration.
+- Pass identity through the supported authenticated mechanism.
+- Validate authentication in the backend.
+- Show loading indicators while requests run.
+- Handle expired sessions and permission errors.
+- Display useful user-friendly error messages.
+- Prevent repeated form submissions.
+- Refresh the relevant UI after successful writes.
+- Avoid duplicating business logic across components.
+- Keep database operations out of unrelated presentation components.
+
+Create typed request and response models where appropriate.
+
+Document how the frontend selects the correct Firebase project and backend environment.
+
+## 22. ADMIN AUTHORIZATION
+
+Create a secure admin experience.
+
+Requirements:
+- Normal users cannot access administrative operations.
+- A hidden route or hidden navigation item is not a security boundary.
+- Verify the administrator role inside every privileged backend operation.
+- Assign the initial admin through a trusted server-side process.
+- Do not permit self-promotion from the registration form or normal profile editor.
+- Add tests for unauthorized access.
+- Record appropriate administrative metadata such as createdBy and updatedAt.
+- Avoid exposing private user data to administrators unless necessary for a defined, authorized purpose.
+
+Do not create a public endpoint that allows anyone to make themselves an administrator.
+
+## 23. PROFILE MANAGEMENT AND DISPLAY
+
+When a user registers:
+1. Create a Firebase Authentication account.
+2. Create the user's Firestore profile.
+3. Initialize safe default values.
+4. Display the user's name and account-specific information in the dashboard.
+5. Allow the user to update their profile.
+6. Save changes to Firestore.
+7. Reload the updated information when the user revisits the website.
+
+The Profile page should show and edit only the current user's permitted fields.
+
+Public pages must not expose private user records.
+
+Create a public user profile feature only if it is explicitly required, with separate consent and carefully selected public fields. It must be disabled by default.
+
+If an administrator creates or imports course information, those records should appear in the course catalog according to their publication status.
+
+If a user updates their profile, their private dashboard should display the updated information after the save succeeds.
+
+## 24. FIREBASE SETUP DOCUMENTATION
+
+Create a complete README explaining how to:
+
+1. Create or select a Firebase project.
+2. Register a web application.
+3. Obtain the Firebase client configuration.
+4. Enable Email/Password Authentication.
+5. Create a Cloud Firestore database.
+6. Enable Firebase Storage if resume uploads are implemented.
+7. Configure Cloud Functions.
+8. Configure the Gemini API secret.
+9. Install project dependencies.
+10. Configure environment variables.
+11. Deploy Firestore rules.
+12. Deploy Storage rules.
+13. Deploy required indexes.
+14. Deploy Cloud Functions.
+15. Configure frontend hosting.
+16. Create the first administrator securely.
+17. Add courses through the admin interface.
+18. Import validated sample data.
+19. Test the full application.
+20. Deploy the production version.
+
+Clearly distinguish public Firebase client configuration from private server credentials.
+
+Firebase client configuration is not an authorization mechanism. Security must be enforced using Authentication, Security Rules, and backend authorization.
+
+Never commit private service-account keys or Gemini secrets to GitHub.
+
+Provide safe environment variable examples with placeholder values.
+
+## 25. ENVIRONMENT VARIABLES AND PROJECT FILES
+
+Create appropriate configuration examples.
+
+For the frontend, use environment variables only for non-secret client configuration that must be available to the browser, such as the Firebase web app configuration.
+
+Example placeholders:
+
+VITE_FIREBASE_API_KEY=YOUR_FIREBASE_WEB_API_KEY
+VITE_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
+VITE_FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
+VITE_FIREBASE_STORAGE_BUCKET=YOUR_FIREBASE_STORAGE_BUCKET
+VITE_FIREBASE_MESSAGING_SENDER_ID=YOUR_SENDER_ID
+VITE_FIREBASE_APP_ID=YOUR_FIREBASE_APP_ID
+
+Adapt variable names to the framework actually used.
+
+For backend secrets, configure a server-side secret named appropriately for the Gemini API key.
+
+Do not expose backend secrets through VITE_ variables or other browser-visible build configuration.
+
+Create:
+- .gitignore
+- .env.example
+- README.md
+- Firestore rules.
+- Storage rules.
+- Firestore index configuration.
+- Backend source.
+- Frontend source.
+- Unit and integration tests where feasible.
+- Seed/import examples.
+- Deployment instructions.
+
+Do not generate real-looking credentials and pretend they are valid.
+
+## 26. UI QUALITY AND ERROR HANDLING
+
+Every implemented page must include appropriate:
+- Loading states.
+- Empty states.
+- Validation messages.
+- Success notifications.
+- Error messages.
+- Retry actions where appropriate.
+- Mobile layouts.
+- Accessible form labels.
+- Confirmation dialogs for destructive actions.
+
+Do not use buttons that do nothing.
+
+Do not use hardcoded dashboard statistics as if they came from the database.
+
+Do not display a successful save message before the backend confirms success.
+
+Do not hide errors by silently returning sample data.
+
+If a service is not configured, explain the missing configuration clearly.
+
+## 27. PERFORMANCE AND DATA QUALITY
+
+Implement:
+- Pagination for catalog data.
+- Search and filtering.
+- Efficient Firestore queries.
+- Necessary composite indexes.
+- Server-side validation.
+- Consistent timestamps.
+- Safe document ID handling.
+- Duplicate prevention where appropriate.
+- Clear data ownership.
+- Appropriate request limits.
+- Error logging without passwords, tokens, or unnecessary resume contents.
+
+Avoid downloading the entire database into the browser.
+
+Avoid unnecessary Firestore reads and writes.
+
+Do not rely on client-side filters as the only security control.
+
+## 28. TESTING REQUIREMENTS
+
+Create automated tests where feasible and perform a documented manual verification checklist.
+
+Test at least the following:
+
+Authentication:
+- Register a student.
+- Register a professional.
+- Log in.
+- Log out.
+- Reset a password.
+- Restore an authenticated session.
+
+Profiles:
+- Create a profile.
+- Update profile fields.
+- Verify that changes persist after refreshing.
+- Verify that one user cannot read another user's private profile.
+
+Courses:
+- Create a course as an administrator.
+- Edit it.
+- Save a draft.
+- Publish it.
+- Verify that the published course appears on /courses.
+- Verify that a featured published course can appear on the homepage.
+- Verify that an unpublished course is not publicly listed.
+- Verify that a normal user cannot publish or delete a course.
+
+Careers and jobs:
+- Create or import catalog records.
+- Verify published records display correctly.
+- Verify unpublished records are hidden.
+
+AI:
+- Verify server-side Gemini configuration.
+- Test a valid analysis request.
+- Test invalid input.
+- Test service failure.
+- Verify fallback behavior.
+- Verify the API key is not present in browser bundles or client requests.
+
+Resume:
+- Upload an allowed file.
+- Reject an invalid file type.
+- Reject oversized files.
+- Verify that another user cannot access the uploaded file.
+- Verify that deletion removes the relevant private data where supported.
+
+Roadmaps and quizzes:
+- Create a roadmap.
+- Update a task.
+- Refresh and verify persistence.
+- Submit a quiz.
+- Verify server-calculated scoring.
+
+Security:
+- Test unauthenticated private requests.
+- Test normal-user access to admin operations.
+- Test cross-user data access.
+- Test attempts to self-assign an admin role.
+
+Deployment:
+- Build the frontend.
+- Run available tests.
+- Verify configured backend functions.
+- Check browser console and network errors.
+- Confirm that actual deployed URLs work before declaring the project complete.
+
+Do not claim a test passed unless it was actually executed successfully.
+
+## 29. IMPLEMENTATION PHASES
+
+Implement in this order.
+
+Phase 1: Inspect the project and establish the design system.
+
+Phase 2: Build the public pages, navigation, reusable components, and responsive layouts.
+
+Phase 3: Configure Firebase Authentication and user registration.
+
+Phase 4: Configure Firestore and secure profile storage.
+
+Phase 5: Implement backend functions and access control.
+
+Phase 6: Connect public careers, courses, and jobs to Firestore.
+
+Phase 7: Implement the admin course management interface.
+
+Phase 8: Implement user-specific dashboards, profile editing, saved items, and progress.
+
+Phase 9: Implement skill-gap analysis and learning roadmaps.
+
+Phase 10: Implement secure resume upload and Gemini analysis.
+
+Phase 11: Implement quizzes and assessments.
+
+Phase 12: Configure rules, indexes, tests, and production settings.
+
+Phase 13: Build and deploy the application.
+
+Phase 14: Verify the deployed frontend-to-backend-to-Firebase workflow.
+
+At the end of each phase:
+- Summarize what was implemented.
+- Identify files changed.
+- Run the relevant tests.
+- Report failures.
+- Fix issues before proceeding where possible.
+
+Do not stop after Phase 2 or deliver only a frontend mockup.
+
+## 30. FINAL ACCEPTANCE CRITERIA
+
+The application is complete only when the following core workflows work end to end:
+
+WORKFLOW A — REGISTRATION:
+A new user registers → Firebase Authentication creates the account → Firestore stores the appropriate profile → the user logs in → the dashboard displays the user's actual information.
+
+WORKFLOW B — PROFILE UPDATE:
+The user edits their profile → the backend or authorized Firestore operation validates the update → the information is saved → the updated information appears after refreshing.
+
+WORKFLOW C — COURSE MANAGEMENT:
+An authorized administrator creates a course → the backend verifies admin permission → Firestore stores the course → the administrator publishes it → the public Courses page displays it.
+
+WORKFLOW D — USER PERSONALIZATION:
+The user enters skills and career interests → the recommendation engine analyzes them → suitable catalog careers are suggested → missing skills are identified → a personalized roadmap is saved → the dashboard displays the saved roadmap.
+
+WORKFLOW E — AI RESUME ANALYSIS:
+The user uploads a private resume → the backend processes it securely → Gemini produces a validated analysis → the user sees the result → the private analysis is saved to the user's records.
+
+WORKFLOW F — SECURITY:
+A normal user cannot administer courses, access another user's private profile, retrieve another user's resume, or grant themselves administrator privileges.
+
+WORKFLOW G — DEPLOYMENT:
+The frontend is deployed, backend functions are configured, Firebase rules are deployed, environment variables and secrets are configured, and the core workflows have been tested against the deployed application.
+
+## 31. FINAL DELIVERABLES
+
+Deliver:
+1. Complete frontend source code.
+2. Complete backend source code.
+3. Firebase Authentication integration.
+4. Firestore database integration.
+5. Firebase Storage integration for private resumes, if implemented.
+6. Firestore and Storage security rules.
+7. Admin course management.
+8. User dashboard and profile management.
+9. Career recommendations and skill-gap analysis.
+10. Personalized roadmaps.
+11. Gemini integration.
+12. Quizzes and progress tracking.
+13. Seed/import scripts and clearly labelled sample data.
+14. Environment variable examples.
+15. README with complete setup instructions.
+16. Deployment instructions.
+17. Automated tests where feasible.
+18. A final checklist identifying implemented, tested, untested, and configuration-dependent features.
+
+Start by inspecting the existing workspace and then implement the application systematically.
+
+Be honest about external configuration requirements. If a Firebase project, API key, billing configuration, deployment permission, or other required resource is missing, explain exactly what the project owner must configure.
+
+The priority is a secure, functional, maintainable application with real data persistence—not merely a visually attractive demonstration.

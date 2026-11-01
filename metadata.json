@@ -1,0 +1,6 @@
+{
+  "name": "Skill2Career",
+  "description": "Your Career Starts with the Right Skills. AI-powered career guidance, skill-gap analysis, personalized learning roadmaps, and course recommendations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
