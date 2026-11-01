@@ -6,6 +6,8 @@ Skill2Career is an AI-powered educational technology platform that helps student
 
 ---
 
+##websitelink( https://skill2career-3-5-6.ai.studio)
+
 ## 🌟 Key Features
 
 1. **AI Resume Analysis (Gemini 4 Argon High-Thinking Mode)**
@@ -69,7 +71,7 @@ npx --yes tsx --test src/utils/logic.test.ts
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open https://skill2career-3-5-6.ai.studio in your browser.
 
 ---
 
